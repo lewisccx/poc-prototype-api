@@ -1,0 +1,24 @@
+
+api:
+  id: '20434028'
+  env: 'sit'
+
+tls:
+  keystore:
+    type: 'jks'
+    path: 'keystores/keystore-poc-${api.env}.jks'
+    alias: 'keystore-poc'
+    key.password: '![QX2t8HuzLB4GFH/5fWWAE5jFEfOh0CMdVu3RHWLD45s=]'
+    password: '![QX2t8HuzLB4GFH/5fWWAE5jFEfOh0CMdVu3RHWLD45s=]'
+
+
+  
+db:
+  mysql:
+    host: 'mudb.mule-training.com'
+    port: '3306'
+    username: 'mule'
+    password: '![k9Xd56RZWvXaJYo5KigKzw==]'
+    database: 'training'
+
+    

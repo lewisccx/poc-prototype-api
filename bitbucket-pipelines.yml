@@ -1,0 +1,85 @@
+image: maven:3.8.4-openjdk-8
+
+definitions:
+  steps:
+    - step: &test
+        name: Build and test
+        caches:
+          - maven
+        script:
+          # Building Mule App
+          # -Dsecure.key=$SECURE_KEY
+          - git clone https://x-token-auth:${PARENT_POM_ACCESS_TOKEN}@bitbucket.org/void-playground/poc-parent-pom.git
+          - echo "$PWD"
+          - ls ./poc-parent-pom -al
+          - cd ./poc-parent-pom
+          - mvn install:install-file -Dfile=./pom.xml -DpomFile=./pom.xml
+          - cd ../
+          - echo "$PWD"
+          - ls -al
+          - cp ./settings-security.xml  ~/.m2/
+          - ls ~/.m2/repository/86c4f2de-3af0-422e-84c6-24f8ee057e5c/ -R
+          # - mvn -B -s ./settings.xml -Dapi.env=${API_ENV} clean test
+          - mvn -B -s ./settings.xml -Dapi.env=${API_ENV} clean install -DskipTests
+    - step: &publish
+        name: Publish to Exchange
+        caches:
+          - maven
+        script:
+          # Building Mule App
+          # -Dsecure.key=$SECURE_KEY
+          - echo "$PWD"
+          - ls -al
+          - mvn -B -s settings.xml
+            -Dapi.env=${API_ENV}
+            deploy -X
+    - step: &deploy
+        name: Deploy to CloudHub 2.0
+        caches:
+          - maven
+        script:
+          - mvn -B -s settings.xml
+           -DmuleDeploy deploy  
+           -Dapi.id=19666784 
+           -Dap.client_id=${AP_CLIENT_ID} 
+           -Dap.client_secret=${AP_CLIENT_SECRET} 
+           -Dap.ca.client_id=${AP_CA_CLIENT_ID} 
+           -Dap.ca.client_secret=${AP_CA_CLIENT_SECRET}  
+           -Dapi.env=${API_ENV} 
+           -Dap.muleversion=${AP_VERSION} 
+           -Dap.vcore=${AP_VCORE} 
+           -Dap.replica=${AP_REPLICA}  
+           -Dap.target=${AP_TARGET}  
+           -Dap.environment=${AP_ENV}
+           -DskipTests -X
+
+pipelines:
+  branches:
+    develop:
+      - stage:
+          name: Build and Deploy to develop
+          deployment: develop
+          steps: 
+            #- step: *test
+            #- step: *publish
+            - step: *deploy
+    feature:
+      - stage:
+          name: Build and Deploy feature
+          deployment: feature
+          steps: 
+            - step: *test
+            - step: *deploy
+    bugfix:
+      - stage:
+          name: Build and Deploy bugfix
+          deployment: bugfix
+          steps: 
+            - step: *test
+            - step: *deploy
+    release:
+      - stage:
+          name: Build and Deploy release
+          deployment: release
+          steps: 
+            - step: *deploy    

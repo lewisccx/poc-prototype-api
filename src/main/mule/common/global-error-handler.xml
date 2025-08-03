@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<error-handler name="apikit-router-error-handler"
+		doc:id="71088ca0-5c6b-45a1-8b57-270bfb5be48d">
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate"
+			doc:id="202ce8c4-7cbc-4250-83db-671b552654df"
+			type="APIKIT:BAD_REQUEST">
+			<ee:transform doc:name="Set Error 400 Response"
+				doc:id="6a515b1b-906b-462f-8196-92e6a33eb517">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.400.code}",
+		"type": "${error.http.400.type}",
+		"message": "${error.http.400.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.400.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 400"
+				doc:id="9d5147ae-40e8-4101-b001-517486110145" message="#[payload]"
+				category="${error.http.400.log.category}" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate"
+			doc:id="580201d6-f020-42f6-b1dd-12bc3428ad61"
+			type="APIKIT:METHOD_NOT_ALLOWED">
+			<ee:transform doc:name="Set Error 405 Response"
+				doc:id="6905b17f-fee7-4c0e-8f06-26bd408b36cf">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.405.code}",
+		"type": "${error.http.405.type}",
+		"message": "${error.http.405.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.405.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 405"
+				doc:id="5aa1f3db-4b74-4f24-a72b-4d2eec100ed6" message="#[payload]"
+				category="${error.http.405.log.category}" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate"
+			doc:id="fec1c6db-68ef-40a9-bce0-52a9628f9280" type="APIKIT:NOT_FOUND">
+			<ee:transform doc:name="Set Error 404 Response"
+				doc:id="79959cd4-bda8-40d6-99e7-cdd988e0ddd5">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.404.code}",
+		"type": "${error.http.404.type}",
+		"message": "${error.http.404.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.404.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 404"
+				doc:id="c7daf658-5a8a-49c8-91e5-e671b93c32cb" message="#[payload]"
+				category="${error.http.404.log.category}" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate"
+			doc:id="8cdbae72-2812-4339-ae5a-7b181eab55be"
+			type="APIKIT:NOT_ACCEPTABLE">
+			<ee:transform doc:name="Set Error 406 Response"
+				doc:id="06f061eb-1d14-4cc5-baa6-1f00756f6015">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": vars.cid default correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.406.code}",
+		"type": "${error.http.406.type}",
+		"message": "${error.http.406.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.415.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 406"
+				doc:id="874df87e-3c2d-4492-b777-7e7be3526426" message="#[payload]"
+				category="${error.http.415.log.category}" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate"
+			doc:id="086797af-7189-4254-82a9-f30beb35e370"
+			type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+			<ee:transform doc:name="Set Error 415 Response"
+				doc:id="bd8fbb5c-2f4d-4c38-aaca-a7dddceacc73">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": vars.cid default correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.415.code}",
+		"type": "${error.http.415.type}",
+		"message": "${error.http.415.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.415.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 415"
+				doc:id="d8c1cbfd-8ab2-45b8-8bf0-81cdf2b917db" message="#[payload]"
+				category="${error.http.415.log.category}" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate"
+			doc:id="1e99db5d-13b5-4296-b30b-98fdd0b888b3"
+			type="APIKIT:NOT_IMPLEMENTED">
+			<ee:transform doc:name="Set Error 501 Response"
+				doc:id="ef3513bc-541d-4487-900b-b380f3b82a65">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": vars.cid default correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.501.code}",
+		"type": "${error.http.501.type}",
+		"message": "${error.http.501.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.501.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 501"
+				doc:id="af4961e0-f213-4089-ad95-4007d07e3ece" message="#[payload]"
+				category="${error.http.501.log.category}" />
+		</on-error-propagate>
+	</error-handler>
+	<error-handler name="http-request-error-handler"
+		doc:id="0fd531e7-fcb5-4ced-8983-6956fa19b02d">
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - SERVER ERROR"
+			doc:id="34e7d500-50d7-41a0-ac2e-ef7e0a9861f1"
+			type="HTTP:CONNECTIVITY, HTTP:SERVICE_UNAVAILABLE, HTTP:BAD_GATEWAY, HTTP:TIMEOUT, HTTP:RETRY_EXHAUSTED, HTTP:GATEWAY_TIMEOUT">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="07fbc752-47d7-4801-8d54-d90b438f82fa"
+				message='#[error.description default ""]'
+				category="${error.http.503.log.category}" />
+			<ee:transform doc:name="Set Error 503 Response"
+				doc:id="b262525b-5e46-4e48-b357-ae3dc31360e3">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.503.code}",
+		"type": "${error.http.503.type}",
+		"message": "${error.http.503.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.503.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 503"
+				doc:id="f587c883-f168-49b3-8cca-b44d31c1b648" message="#[payload]"
+				category="${error.http.500.log.category}" />
+
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - BAD REQUEST"
+			doc:id="82ff2c83-5e2d-4d71-aa9b-29bc3f4a5e53" type="HTTP:BAD_REQUEST">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="d18fa9e9-110d-46cc-8ee7-69e66264ac8b"
+				message='#[error.description default ""]'
+				category="${error.http.400.log.category}" />
+			<ee:transform doc:name="Set Error 400 Response"
+				doc:id="22e3a0b3-b239-496a-aff5-250db5ecd4b7">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.400.code}",
+		"type": "${error.http.400.type}",
+		"message": "${error.http.400.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.400.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 400"
+				doc:id="9975b376-790d-467c-bf56-2cd816616ba0" message="#[payload]"
+				category="${error.http.400.log.category}" />
+
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - AUTHORIZATION"
+			doc:id="00f682e3-2119-463f-99d7-bb24f9bdf0fb"
+			type="HTTP:UNAUTHORIZED, HTTP:CLIENT_SECURITY">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="17c50b0d-3c0e-41d5-ad82-061eb6e797f1"
+				message='#[error.description default ""]'
+				category="${error.http.401.log.category}" />
+			<ee:transform doc:name="Set Error 401 Response"
+				doc:id="b7686626-44a1-476f-bfaf-b837b7d78d31">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.401.code}",
+		"type": "${error.http.401.type}",
+		"message": "${error.http.401.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.401.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 401"
+				doc:id="a06099cf-feb3-4c2f-88f1-f5b813ad9da0" message="#[payload]"
+				category="${error.http.401.log.category}" />
+
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - FORBIDDEN"
+			doc:id="f847afcc-a908-4d2e-8833-cc760d119721" type="HTTP:FORBIDDEN, HTTP:SECURITY">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="549acaa9-6156-417b-b93c-337f89586691"
+				message='#[error.description default ""]'
+				category="${error.http.403.log.category}" />
+			<ee:transform doc:name="Set Error 403 Response"
+				doc:id="a347b558-2e5c-4357-b3c0-f6940a6989e5">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.403.code}",
+		"type": "${error.http.403.type}",
+		"message": "${error.http.403.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.403.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 403"
+				doc:id="cea879c9-cb12-4b96-8f87-c48f562c4a54" message="#[payload]"
+				category="${error.http.403.log.category}" />
+
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - TOO MANY REQUESTS"
+			doc:id="0b3f6b49-5b8a-4c37-aa6e-ff57d42b3ae8"
+			type="HTTP:TOO_MANY_REQUESTS">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="32aaac82-9ff4-45b6-9a08-ed32ec756773"
+				message='#[error.description default ""]'
+				category="${error.http.429.log.category}" />
+			<ee:transform doc:name="Set Error 429 Response"
+				doc:id="063b457b-f4b4-483a-a396-79fba1b16273">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "transactionId": correlationId,
+  "apiName": "${api.name}",
+  "createdDateTime": (now() >> "${timezone.log}") as DateTime { format: "yyyy-MM-dd HH:mm:ss.S"},
+  "error": {
+    "status": "${error.http.429.code}",
+    "type": "${error.http.429.type}",
+    "message": "${error.http.429.message}"
+  }
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.429.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 429"
+				doc:id="bbf94db3-22c2-40ac-9955-1d87bea3c974" message="#[payload]"
+				category="${error.http.429.log.category}" />
+
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - NOT FOUND"
+			doc:id="18f6467f-aa3e-4777-8682-937278600a83" type="HTTP:NOT_FOUND">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="fa36e065-5be8-4f7c-ac09-91e47301ff16"
+				message='#[error.description default ""]'
+				category="${error.http.404.log.category}" />
+			<ee:transform doc:name="Set Error 404 Response"
+				doc:id="c0e2252d-7a8d-4545-9838-47d98ac025e8">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.404.code}",
+		"type": "${error.http.404.type}",
+		"message": "${error.http.404.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.404.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 404"
+				doc:id="bbe6a924-214c-4b48-b2a7-f2ef0721ad51" message="#[payload]"
+				category="${error.http.404.log.category}" />
+
+		</on-error-propagate>
+				<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - NOT_ACCEPTABLE"
+			doc:id="88490326-6877-4595-8af2-e467fdc182c7" type="HTTP:NOT_ACCEPTABLE">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="ac95f0dd-d4d5-4298-ac8f-60f9544f389f"
+				message='#[error.description default ""]'
+				category="${error.http.404.log.category}" />
+			<ee:transform doc:name="Set Error 406 Response"
+				doc:id="e6d02638-c1e4-4093-bc37-13706deb9d2e">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.406.code}",
+		"type": "${error.http.406.type}",
+		"message": "${error.http.406.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.404.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 406"
+				doc:id="728a5ce8-04ab-41d4-94a9-2424e7238d32" message="#[payload]"
+				category="${error.http.404.log.category}" />
+
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - NOT FOUND"
+			doc:id="b1269021-0ffd-451b-91a0-6ea52127aa61" type="HTTP:NOT_FOUND">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="a041f702-20c7-42d5-a66a-73e15d8c75d9"
+				message='#[error.description default ""]'
+				category="${error.http.404.log.category}" />
+			<ee:transform doc:name="Set Error 404 Response"
+				doc:id="eddbe74b-bed9-4972-8e6d-9b2f48d93913">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.404.code}",
+		"type": "${error.http.404.type}",
+		"message": "${error.http.404.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.404.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 404"
+				doc:id="2a9a8d83-c7dc-4cd6-b0f2-25da9357780e" message="#[payload]"
+				category="${error.http.404.log.category}" />
+
+		</on-error-propagate>
+				<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - NOT_ACCEPTABLE"
+			doc:id="5714fc88-4fe6-4c1a-810c-40f0f82874c7" type="HTTP:METHOD_NOT_ALLOWED">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="da63b4ce-b389-43c9-b629-7764c14958bf"
+				message='#[error.description default ""]'
+				category="${error.http.404.log.category}" />
+			<ee:transform doc:name="Set Error 405 Response"
+				doc:id="578cc696-a3d6-452d-af7e-da4153e353b9">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.405.code}",
+		"type": "${error.http.405.type}",
+		"message": "${error.http.405.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.404.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 405"
+				doc:id="575d9f3a-7cd9-4f62-bcc3-aead3ce8430e" message="#[payload]"
+				category="${error.http.404.log.category}" />
+
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - NOT_ACCEPTABLE"
+			doc:id="c55e8626-54ff-43ca-b7f9-c2a39160d2aa" type="HTTP:UNSUPPORTED_MEDIA_TYPE">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="4544c308-0e84-4b93-b6c4-15d021fcb324"
+				message='#[error.description default ""]'
+				category="${error.http.404.log.category}" />
+			<ee:transform doc:name="Set Error 415 Response"
+				doc:id="b4761722-6bad-4315-bd24-d5758c897b13">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.415.code}",
+		"type": "${error.http.415.type}",
+		"message": "${error.http.415.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.404.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 415"
+				doc:id="84401435-f476-4ee8-a1d8-1ddb2513fa12" message="#[payload]"
+				category="${error.http.404.log.category}" />
+
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true"
+			logException="true" doc:name="On Error Propagate - ANY"
+			doc:id="7ab650ac-8fff-4ad8-a2c6-828d46d788dd" type="ANY">
+			<logger level="DEBUG" doc:name="Log Request Error"
+				doc:id="5e633e2b-0139-4756-872c-1522a3ec2aab"
+				message='#[error.description default ""]'
+				category="${error.http.500.log.category}" />
+			<ee:transform doc:name="Set Error 500 Response"
+				doc:id="68eeb197-4d1d-4d98-b230-5e0713009869">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"transactionId": correlationId,
+	"apiName": "${api.name}",
+	"createdDateTime": (now() >> "${timezone.log}") as DateTime {
+		format: "yyyy-MM-dd HH:mm:ss.S"
+	},
+	"error": {
+		"status": "${error.http.500.code}",
+		"type": "${error.http.500.type}",
+		"message": "${error.http.500.message}"
+	}
+}]]></ee:set-payload>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="httpStatus"><![CDATA["${error.http.500.code}"]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<logger level="ERROR" doc:name="Log Error - 500"
+				doc:id="06e5c441-8d86-44c7-90f8-c0fc8c6904cd" message="#[payload]"
+				category="${error.http.500.log.category}" />
+
+		</on-error-propagate>
+	</error-handler>
+</mule>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="american-flights-api-impl:getFlights:subflow" doc:id="208a9697-8e00-4d9e-a186-0e70fdaba019" >
+		<flow-ref doc:name="db:getFlights" doc:id="f88d1b29-6186-4625-a419-9c7bad378cd0" name="american-flights-api-db:getFlights:subflow"/>
+		<ee:transform doc:name="Set Response" doc:id="18497ae3-e4d2-4c1f-9101-f8920849ad31" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( item , index ) -> {
+	ID: item.ID,
+	code: (item.code1 default "") ++ (item.code2 default ""),
+	price: item.price default 0,
+	departureDate: item.takeOffDate as String default "",
+	origin: item.fromAirport default "",
+	destination: item.toAirport default "",
+	emptySeats: item.seatsAvailable default 0,
+	plane: {
+		"type": item.planeType default "",
+	    "totalSeats": item.totalSeats default 0
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="american-flights-api-impl:getFlightsById:subflow" doc:id="b8c85e74-41f6-479b-b22f-f3eeb96cdd91" >
+		<flow-ref doc:name="db:getFlightsById" doc:id="27829250-1097-449e-9e47-9db991b3f1e8" name="american-flights-api-db:getFlightsById:subflow"/>
+		<ee:transform doc:name="Set Response" doc:id="f8c03bd9-21f5-40be-990f-a2b783c3fc43" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( item , index ) -> {
+	ID: item.ID,
+	code: (item.code1 default "") ++ (item.code2 default ""),
+	price: item.price default 0,
+	departureDate: item.takeOffDate as String default "",
+	origin: item.fromAirport default "",
+	destination: item.toAirport default "",
+	emptySeats: item.seatsAvailable default 0,
+	plane: {
+		"type": item.planeType default "",
+	    "totalSeats": item.totalSeats default 0
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="american-flights-api-impl:postFlight:subflow" doc:id="b0397417-d951-48b5-9f14-1ed135e56715" >
+		<ee:transform doc:name="Set Response" doc:id="498bc8f3-282e-4a59-902b-10c43e1fec1d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{"message": "Flight added (but not really)"}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

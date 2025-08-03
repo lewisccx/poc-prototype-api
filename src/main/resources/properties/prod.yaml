@@ -1,0 +1,12 @@
+
+api:
+  id: ''
+  env: 'prod'
+
+db:
+  mysql:
+    host: 'mudb.mule-training.com'
+    port: '3306'
+    username: 'mule'
+    password: '![k9Xd56RZWvXaJYo5KigKzw==]'
+    database: 'training'

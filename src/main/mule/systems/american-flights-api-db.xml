@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<sub-flow name="american-flights-api-db:getFlights:subflow" doc:id="2548ff43-9c9d-4452-91ee-3ecb618f8190" >
+		<db:select doc:name="Select:getFlights" doc:id="03a57498-2866-4aa8-ac7c-5f6395602870" config-ref="Database_Config" >
+			<db:sql ><![CDATA[SELECT *
+FROM american
+]]></db:sql>
+		</db:select>
+	</sub-flow>
+	<sub-flow name="american-flights-api-db:getFlightsById:subflow" doc:id="3a55274e-e00a-4c1c-80e5-41bde7b6e2a5" >
+		<db:select doc:name="Select:getFlightsById" doc:id="066dad2f-6030-4630-8489-b13f00772507" config-ref="Database_Config" >
+			<db:sql ><![CDATA[SELECT *
+FROM american
+WHERE ID = :ID
+]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{'ID' : attributes.uriParams.id}]]]></db:input-parameters>
+		</db:select>
+	</sub-flow>
+</mule>

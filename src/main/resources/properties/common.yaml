@@ -1,0 +1,78 @@
+api:
+  name: 'american-flights-api'
+  layer: 'Experience'
+http:
+  port: '8081'
+  host: '0.0.0.0'
+  basepath: '/api/v1'
+  timeout: 
+    read: '30000'
+    idle: '30000'
+
+timezone:
+  log: "Asia/Singapore"
+        
+success:
+  http:
+    '200': 
+      code: "200"
+      message: "The successfully invoked request."
+      log.category: "log.mule.${api.name}.200-ok.log-success"
+
+error:
+  http:
+    '400':
+      code: "400"
+      type: "BAD_REQUEST"
+      message: "The request is malformed or invalid."
+      log.category: "log.mule.${api.name}.bad-request.log-error"
+    '401':
+      code: "401"
+      type: "UNAUTHORIZED"
+      message: "The request is unauthorized or invalid client application credentials."
+      log.category: "log.mule.${api.name}.unauthorized.log-error"
+    '403':
+      code: "403"
+      type: "FORBIDDEN"
+      message: "The request is not authorized to access the requested resource."
+      log.category: "log.mule.${api.name}.forbidden.log-error"
+    '404':
+      code: "404"
+      type: "NOT_FOUND"
+      message: "The requested resource could not be found."
+      log.category: "log.mule.${api.name}.not-found.log-error"
+    '405':
+      code: "405"
+      type: "METHOD_NOT_ALLOWED"
+      message: "The server only allows specific HTTP methods for this resource resource."
+      log.category: "log.mule.${api.name}.method-not-allowed.log-error"
+    '406':
+      code: "406"
+      type: "NOT_ACCEPTABLE"
+      message: "The requested resource cannot generate acceptable content according to the Accept headers sent in the request."
+      log.category: "log.mule.${api.name}.not-acceptable.log-error"
+    '415':
+      code: "415"
+      type: "UNSUPPORTED_MEDIA_TYPE"
+      message: "The request media type is not allowed to access the specific HTTP resource."
+      log.category: "log.mule.${api.name}.unsupported-media-type.log-error"
+    '429':
+      code: "429"
+      type: "TOO_MANY_REQUESTS"
+      message: "The user has sent too many requests in a given amount of time."
+      log.category: "log.mule.${api.name}.too-many-request.log-error"
+    '500':
+      code: "500"
+      type: "INTERNAL_SERVER"
+      message: "An unexpected occurred on the server."
+      log.category: "log.mule.${api.name}.internal-server.log-error"
+    '501':
+      code: "501"
+      type: "NOT_IMPLEMENTED"
+      message: "The server does not support the functionality required to fulfill the request.."
+      log.category: "log.mule.${api.name}.not-implemented.log-error"
+    '503':
+      code: "503"
+      type: "SERVICE_UNAVAILABLE"
+      message: "The server is currently unable to handle the request due to maintenance or overload."
+      log.category: "log.mule.${api.name}.service-unavaible.log-error"

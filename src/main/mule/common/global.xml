@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd 
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="80499b9a-3116-4770-a4db-bfc6cfcd394c" basePath="${http.basepath}">
+		<http:listener-connection host="${http.host}" port="${http.port}" readTimeout="${http.timeout.read}" connectionIdleTimeout="${http.timeout.idle}" tlsContext="TLS_Context" protocol="HTTPS"/>
+	</http:listener-config>
+	<apikit:config name="poc-prototype-api-config" api="resource::a811dcab-e712-4818-a879-9dd31af71db9:api-prototype:1.0.1:raml:zip:api-prototype.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="8342973e-36e9-4a63-ab52-1a205b616ce0" >
+		<db:my-sql-connection host="${db.mysql.host}" port="${db.mysql.port}" user="${db.mysql.username}" password="${secure::db.mysql.password}" database="${db.mysql.database}" />
+	</db:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="e069a406-5506-4c3d-89e8-c0317d43d59d" file="properties/${api.env}.yaml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="c30e3051-16d3-4c88-87ed-8aca6c968748" file="properties/common.yaml" />
+	<global-property doc:name="Global Property" doc:id="d741b9b7-2e76-4ebf-95c4-9ce3dc93320c" name="api.env" value="${api.env}" />
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="false" doc:name="API Autodiscovery" doc:id="9b8e74bc-b21d-4e7a-af7f-1028bb7b3ea1" flowRef="poc-prototype-api-main" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a0d3b168-0670-47d0-8464-0423bc7686e1" file="properties/${api.env}.yaml" key="${encrypt.key}"/>
+	<tls:context name="TLS_Context" doc:name="TLS Context" doc:id="75b686d3-44fc-48a1-917c-2654eb983c7d" >
+		<tls:key-store type="jks" path="${tls.keystore.path}" alias="${tls.keystore.alias}" keyPassword="${secure::tls.keystore.key.password}" password="${secure::tls.keystore.password}"/>
+	</tls:context>
+</mule>
