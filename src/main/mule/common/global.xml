@@ -14,7 +14,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="80499b9a-3116-4770-a4db-bfc6cfcd394c" basePath="${http.basepath}">
 		<http:listener-connection host="${http.host}" port="${http.port}" readTimeout="${http.timeout.read}" connectionIdleTimeout="${http.timeout.idle}" tlsContext="TLS_Context" protocol="HTTPS"/>
 	</http:listener-config>
-	<apikit:config name="poc-prototype-api-config" api="resource::a811dcab-e712-4818-a879-9dd31af71db9:api-prototype:1.0.1:raml:zip:api-prototype.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<apikit:config name="poc-prototype-api-config" api="resource::a811dcab-e712-4818-a879-9dd31af71db9:api-prototype:1.0.3:raml:zip:api-prototype.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="8342973e-36e9-4a63-ab52-1a205b616ce0" >
 		<db:my-sql-connection host="${db.mysql.host}" port="${db.mysql.port}" user="${db.mysql.username}" password="${secure::db.mysql.password}" database="${db.mysql.database}" />
 	</db:config>

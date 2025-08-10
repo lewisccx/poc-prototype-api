@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
+    <parent>
+		<groupId>a811dcab-e712-4818-a879-9dd31af71db9</groupId>
+		<artifactId>poc-parent-pom</artifactId>
+		<version>1.0.5</version>
+		<relativePath>./poc-parent-pom/pom.xml</relativePath>
+	</parent>
+	
 	<groupId>a811dcab-e712-4818-a879-9dd31af71db9</groupId>
 	<artifactId>poc-prototype-api</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0-20250808.1</version>
 	<packaging>mule-application</packaging>
 
 	<name>poc-prototype-api</name>
@@ -15,12 +21,7 @@
 		<api.layer>${api.layer.sapi}</api.layer>
 		<munit.version>2.3.14</munit.version>
 	</properties>
-	<parent>
-		<groupId>a811dcab-e712-4818-a879-9dd31af71db9</groupId>
-		<artifactId>poc-parent-pom</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>./poc-parent-pom/pom.xml</relativePath>
-	</parent>
+	
 	<build>
 		<plugins>
 			<plugin>
