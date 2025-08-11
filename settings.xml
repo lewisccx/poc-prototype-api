@@ -134,7 +134,7 @@ under the License.
     <server>
 			<id>anypoint-exchange-v3</id>
 			<username>~~~Client~~~</username>
-			<password>1bab1f0b3c8a45ea9e39d33bd56bbb1f~?~C382306D1CF946Db9571E1707BA703f8</password>
+			<password>${env.AP_EXCHANGE_V3_PWD}</password>
 		</server>
   </servers>
 
