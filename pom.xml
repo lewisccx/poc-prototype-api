@@ -9,11 +9,11 @@
 	</parent>
 	
 	<groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</groupId>
-	<artifactId>poc-prototype-api</artifactId>
+	<artifactId>poc-prototype-api-app</artifactId>
 	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
-	<name>poc-prototype-api</name>
+	<name>poc-prototype-api-app</name>
 	<properties>
 		<api.groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</api.groupId>
 		<api.artifactId>poc-prototype-api</api.artifactId>
