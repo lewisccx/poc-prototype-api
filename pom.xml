@@ -2,24 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
     <parent>
-		<groupId>a811dcab-e712-4818-a879-9dd31af71db9</groupId>
+		<groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</groupId>
 		<artifactId>poc-parent-pom</artifactId>
-		<version>1.0.6</version>
+		<version>1.0.0</version>
 		<relativePath>./parent-pom/pom.xml</relativePath>
 	</parent>
 	
-	<groupId>a811dcab-e712-4818-a879-9dd31af71db9</groupId>
+	<groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</groupId>
 	<artifactId>poc-prototype-api</artifactId>
-	<version>1.0.0-20250808.1</version>
+	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
 	<name>poc-prototype-api</name>
 	<properties>
-		<api.groupId>a811dcab-e712-4818-a879-9dd31af71db9</api.groupId>
-		<api.artifactId>api-prototype</api.artifactId>
-		<api.version>1.0.3</api.version>
+		<api.groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</api.groupId>
+		<api.artifactId>poc-prototype-api</api.artifactId>
+		<api.version>1.0.0</api.version>
 		<api.layer>${api.layer.sapi}</api.layer>
-		<munit.version>2.3.14</munit.version>
 	</properties>
 	
 	<build>
