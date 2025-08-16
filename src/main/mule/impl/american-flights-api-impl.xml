@@ -60,4 +60,33 @@ output application/json
 			</ee:message>
 		</ee:transform>
 	</sub-flow>
+	<sub-flow name="american-flights-api-impl:authorize:subflow" doc:id="bdd66b21-a88e-4720-9b26-6ad7db3923d3" >
+		<ee:transform doc:name="reade privateKey in PEM" doc:id="5290e291-ea89-452c-bcd9-ae81e1b2506d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+import * from jwt::RSA
+output application/json
+var privateKey = (readUrl(Mule::p('auth.private_key'),"text/plain")) replace "\r" with ""
+
+---
+{
+	token: JWT(
+		{
+		  	"alg": "RS256",
+		  	"typ": "JWT"
+		},
+		{
+			iss: payload.iss default "some@email.com",
+			aud: payload.aud default 'https://oauth2.googleapis.com/token',
+			iat: now() as Number { unit: 'seconds' },
+			exp: (now() + |PT3600S|) as Number { unit: 'seconds' }
+		},
+		privateKey as String,
+		"Sha256withRSA"
+	),
+	expiration: now() + |PT3550S|
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
 </mule>
