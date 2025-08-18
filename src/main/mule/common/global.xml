@@ -24,6 +24,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="false" doc:name="API Autodiscovery" doc:id="9b8e74bc-b21d-4e7a-af7f-1028bb7b3ea1" flowRef="poc-prototype-api-main" />
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a0d3b168-0670-47d0-8464-0423bc7686e1" file="properties/${api.env}.yaml" key="${encrypt.key}"/>
 	<tls:context name="TLS_Context" doc:name="TLS Context" doc:id="75b686d3-44fc-48a1-917c-2654eb983c7d" >
+		<tls:trust-store path="${tls.truststore.path}" password="${secure::tls.truststore.password}" type="jks"/>
 		<tls:key-store type="jks" path="${tls.keystore.path}" alias="${tls.keystore.alias}" keyPassword="${secure::tls.keystore.key.password}" password="${secure::tls.keystore.password}"/>
 	</tls:context>
 </mule>

@@ -6,19 +6,29 @@ api:
 tls:
   keystore:
     type: 'jks'
-    path: 'keystores/keystore-poc-${api.env}.jks'
-    alias: 'keystore-poc'
-    key.password: '![QX2t8HuzLB4GFH/5fWWAE5jFEfOh0CMdVu3RHWLD45s=]'
-    password: '![QX2t8HuzLB4GFH/5fWWAE5jFEfOh0CMdVu3RHWLD45s=]'
-
-
+    path: 'keystores/keystore-${api.env}.jks'
+    alias: 'mule-server'
+#   key.password: 'dev-lewisccx'
+#   password: 'dev-lewisccx' 
+    key.password: '![h8r2pn8ekwSx9kOn5yOp7w==]'
+    password: '![h8r2pn8ekwSx9kOn5yOp7w==]'
+  truststore:
+    type: 'jks'
+    path: 'truststores/truststore-${api.env}.jks'
+    alias: 'mule-server'
+#   key.password: 'dev-lewisccx'
+#   password: 'dev-lewisccx' 
+    key.password: '![h8r2pn8ekwSx9kOn5yOp7w==]'
+    password: '![h8r2pn8ekwSx9kOn5yOp7w==]'
+  
   
 db:
   mysql:
     host: 'mudb.mule-training.com'
     port: '3306'
     username: 'mule'
-    password: '![k9Xd56RZWvXaJYo5KigKzw==]'
+#   password: 'mule' 
+    password: '![k9Xd56RZWvXaJYo5KigKzw==]' 
     database: 'training'
 
 auth:
