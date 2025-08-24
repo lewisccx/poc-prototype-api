@@ -199,7 +199,7 @@ output application/json
 		<on-error-propagate enableNotifications="true"
 			logException="true" doc:name="On Error Propagate - SERVER ERROR"
 			doc:id="34e7d500-50d7-41a0-ac2e-ef7e0a9861f1"
-			type="HTTP:CONNECTIVITY, HTTP:SERVICE_UNAVAILABLE, HTTP:BAD_GATEWAY, HTTP:TIMEOUT, HTTP:RETRY_EXHAUSTED, HTTP:GATEWAY_TIMEOUT">
+			type="HTTP:CONNECTIVITY, HTTP:SERVICE_UNAVAILABLE, HTTP:BAD_GATEWAY, HTTP:TIMEOUT, HTTP:RETRY_EXHAUSTED, HTTP:GATEWAY_TIMEOUT, DB:CONNECTIVITY">
 			<logger level="DEBUG" doc:name="Log Request Error"
 				doc:id="07fbc752-47d7-4801-8d54-d90b438f82fa"
 				message='#[error.description default ""]'

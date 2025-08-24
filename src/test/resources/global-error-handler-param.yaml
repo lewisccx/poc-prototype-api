@@ -5,3 +5,19 @@
       }
     error: "DB:CONNECTIVITY"
     output: '503'
+    
+500Parameterization:
+    input: | 
+      {
+          "iss": "some@gmail.com"
+      }
+    error: "DB:QUERY_EXECUTION"
+    output: '500'
+
+400Parameterization:
+    input: | 
+      {
+          "iss": "some@gmail.com"
+      }
+    error: "DB:QUERY_EXECUTION"
+    output: '500'

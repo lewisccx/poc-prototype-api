@@ -6,6 +6,7 @@
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
 	<sub-flow name="american-flights-api-db:getFlights:subflow" doc:id="2548ff43-9c9d-4452-91ee-3ecb618f8190" >
 		<db:select doc:name="Select:getFlights" doc:id="03a57498-2866-4aa8-ac7c-5f6395602870" config-ref="Database_Config" >
+			<error-mapping sourceType="DB:QUERY_EXECUTION" targetType="ANY" />
 			<db:sql ><![CDATA[SELECT *
 FROM american
 ]]></db:sql>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="poc-prototype-api-test-suite.xml" minMuleVersion="4.9.7">
+		<munit:parameterizations file="global-error-handler-param.yaml" />
+	</munit:config>
+	<munit:test name="poc-prototype-api-test-suite-get:\flights:poc-prototype-api-configTest" doc:id="317d55bb-f53f-4652-bce3-c00af38b777b" description="Test" expectedErrorType="${error}">
+		<munit:behavior >
+			<munit:set-event doc:name="Set Event" doc:id="9407fe31-ad89-47c6-8062-3f319352ae4b" >
+				<munit:payload value="${input}" encoding="UTF-8" mediaType="application/json" />
+			</munit:set-event>
+			<munit-tools:mock-when doc:name="Mock when error in db" doc:id="279423c0-b0a0-4904-95d2-91baeb5d5b6f" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Select:getFlights" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="03a57498-2866-4aa8-ac7c-5f6395602870" attributeName="doc:id" />
+					<munit-tools:with-attribute whereValue="Database_Config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="${error}" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\flights:poc-prototype-api-config" doc:id="402a73f5-999c-4697-bd44-b717e89e5ebd" name="get:\flights:poc-prototype-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert httpStatus equals output" doc:id="018d3e9b-a82f-4ff7-bb75-174f63886206" actual="#[vars.httpStatus]" expected="${output}"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
