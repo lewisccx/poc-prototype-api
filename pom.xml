@@ -18,7 +18,7 @@
 		<api.artifactId>poc-prototype-api</api.artifactId>
 		<api.version>1.0.1</api.version>
 		<api.layer>${api.layer.sapi}</api.layer>
-		<mule.maven.plugin.version>4.1.0</mule.maven.plugin.version>
+		<mule.maven.plugin.version>4.5.1</mule.maven.plugin.version>
 	</properties>
 	<build>
 		<plugins>
