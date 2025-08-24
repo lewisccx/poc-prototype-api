@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-    <parent>
+	<parent>
 		<groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</groupId>
 		<artifactId>poc-parent-pom</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>./poc-parent-pom/pom.xml</relativePath>
 	</parent>
-	
 	<groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</groupId>
 	<artifactId>poc-prototype-api-app</artifactId>
 	<version>1.0.0</version>
@@ -19,19 +18,19 @@
 		<api.artifactId>poc-prototype-api</api.artifactId>
 		<api.version>1.0.1</api.version>
 		<api.layer>${api.layer.sapi}</api.layer>
+		<mule.maven.plugin.version>4.1.0</mule.maven.plugin.version>
 	</properties>
-	
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
-				<version>4.2.0</version>
+				<version>${mule.maven.plugin.version}</version>
 				<configuration>
 					<sharedLibraries>
 						<sharedLibrary>
-							 <groupId>com.mysql</groupId>
-		    				 <artifactId>mysql-connector-j</artifactId>
+							<groupId>com.mysql</groupId>
+							<artifactId>mysql-connector-j</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
 				</configuration>
@@ -76,15 +75,15 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-		    <groupId>com.mysql</groupId>
-		    <artifactId>mysql-connector-j</artifactId>
-		    <version>9.4.0</version>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>9.4.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>68ef9520-24e9-4cf2-b2f5-620025690913</groupId>
-		  <artifactId>data-weave-jwt-library</artifactId>
-		  <version>1.0.2</version>
-		  <classifier>dw-library</classifier>
+			<groupId>68ef9520-24e9-4cf2-b2f5-620025690913</groupId>
+			<artifactId>data-weave-jwt-library</artifactId>
+			<version>1.0.2</version>
+			<classifier>dw-library</classifier>
 		</dependency>
 	</dependencies>
 </project>

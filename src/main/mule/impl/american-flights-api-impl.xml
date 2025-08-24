@@ -61,7 +61,7 @@ output application/json
 		</ee:transform>
 	</sub-flow>
 	<sub-flow name="american-flights-api-impl:authorize:subflow" doc:id="bdd66b21-a88e-4720-9b26-6ad7db3923d3" >
-		<ee:transform doc:name="reade privateKey in PEM" doc:id="5290e291-ea89-452c-bcd9-ae81e1b2506d" >
+		<ee:transform doc:name="read privateKey in PEM" doc:id="5290e291-ea89-452c-bcd9-ae81e1b2506d" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 import * from jwt::RSA

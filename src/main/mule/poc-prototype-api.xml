@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
-    <flow name="poc-prototype-api-main" initialState="started">
+    <flow name="poc-prototype-api-main" initialState="started" doc:id="8cbcfcb9-f4c9-4647-b7ab-4f332a686bb6">
         <http:listener path="/*" config-ref="HTTP_Listener_config">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
@@ -27,5 +27,6 @@
     </flow>
 	<flow name="post:\authorize:application\json:poc-prototype-api-config" doc:id="4f5add73-df88-455c-9236-0dc1fcbddd39" initialState="started" >
 		<flow-ref doc:name="impl:authorize:subflow" doc:id="35f0f498-e6f0-4a08-ab51-8deb63544011" name="american-flights-api-impl:authorize:subflow" />
+		<error-handler ref="http-request-error-handler" />
 	</flow>
 </mule>

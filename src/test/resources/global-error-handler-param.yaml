@@ -1,0 +1,7 @@
+503Parameterization:
+    input: | 
+      {
+          "iss": "some@gmail.com"
+      }
+    error: "DB:CONNECTIVITY"
+    output: '503'
