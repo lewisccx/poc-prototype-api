@@ -10,7 +10,7 @@
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
             </http:error-response>
         </http:listener>
-        <apikit:router config-ref="poc-prototype-api-config" />
+		<apikit:router config-ref="poc-prototype-api-config" />
 		<error-handler ref="apikit-router-error-handler" />
     </flow>
     <flow name="get:\flights:poc-prototype-api-config" initialState="started">

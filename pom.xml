@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</groupId>
+		<groupId>d0b96512-3681-4a51-a0e2-0f9c00219a37</groupId>
 		<artifactId>poc-parent-pom</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>./poc-parent-pom/pom.xml</relativePath>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</groupId>
-	<artifactId>poc-prototype-api-app</artifactId>
+	<groupId>43741aa3-8578-46e7-ba11-bec80c101db9</groupId>
+	<artifactId>poc-prototype-api</artifactId>
 	<version>1.0.0</version>
 	<packaging>mule-application</packaging>
 
-	<name>poc-prototype-api-app</name>
+	<name>poc-prototype-api</name>
 	<properties>
-		<api.groupId>9b9e5e73-882a-460e-ac93-04acdbc8bdaa</api.groupId>
-		<api.artifactId>poc-prototype-api</api.artifactId>
-		<api.version>1.0.1</api.version>
+		<api.groupId>43741aa3-8578-46e7-ba11-bec80c101db9</api.groupId>
+		<api.artifactId>singapore-flights-api</api.artifactId>
+		<api.version>1.0.0</api.version>
 		<api.layer>${api.layer.sapi}</api.layer>
-		<mule.maven.plugin.version>4.5.1</mule.maven.plugin.version>
 	</properties>
 	<build>
 		<plugins>
@@ -29,8 +29,8 @@
 				<configuration>
 					<sharedLibraries>
 						<sharedLibrary>
-							<groupId>com.mysql</groupId>
-							<artifactId>mysql-connector-j</artifactId>
+							<groupId>mysql</groupId>
+							<artifactId>mysql-connector-java</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
 				</configuration>
@@ -44,18 +44,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-http-connector</artifactId>
-			<version>1.10.4</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-sockets-connector</artifactId>
-			<version>1.2.6</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
 			<groupId>${api.groupId}</groupId>
 			<artifactId>${api.artifactId}</artifactId>
 			<version>${api.version}</version>
@@ -63,27 +51,29 @@
 			<type>zip</type>
 		</dependency>
 		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-http-connector</artifactId>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-apikit-module</artifactId>
-			<version>1.11.7</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-db-connector</artifactId>
-			<version>1.14.16</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<version>9.4.0</version>
+			<groupId>com.mulesoft.modules</groupId>
+			<artifactId>mule-secure-configuration-property-module</artifactId>
+			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-			<groupId>68ef9520-24e9-4cf2-b2f5-620025690913</groupId>
-			<artifactId>data-weave-jwt-library</artifactId>
-			<version>1.0.2</version>
-			<classifier>dw-library</classifier>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.48</version>
 		</dependency>
 	</dependencies>
 </project>

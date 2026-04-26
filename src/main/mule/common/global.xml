@@ -12,9 +12,9 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="80499b9a-3116-4770-a4db-bfc6cfcd394c" basePath="${http.basepath}">
-		<http:listener-connection host="${http.host}" port="${http.port}" readTimeout="${http.timeout.read}" connectionIdleTimeout="${http.timeout.idle}" tlsContext="TLS_Context" protocol="HTTPS"/>
+		<http:listener-connection host="${http.host}" port="${http.port}" readTimeout="${http.timeout.read}" connectionIdleTimeout="${http.timeout.idle}"/>
 	</http:listener-config>
-	<apikit:config name="poc-prototype-api-config" api="resource::9b9e5e73-882a-460e-ac93-04acdbc8bdaa:poc-prototype-api:1.0.1:raml:zip:poc-prototype-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<apikit:config name="poc-prototype-api-config" api="resource::43741aa3-8578-46e7-ba11-bec80c101db9:singapore-flights-api:1.0.0:raml:zip:api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="8342973e-36e9-4a63-ab52-1a205b616ce0" >
 		<db:my-sql-connection host="${db.mysql.host}" port="${db.mysql.port}" user="${db.mysql.username}" password="${secure::db.mysql.password}" database="${db.mysql.database}" />
 	</db:config>
@@ -22,9 +22,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	<configuration-properties doc:name="Configuration properties" doc:id="c30e3051-16d3-4c88-87ed-8aca6c968748" file="properties/common.yaml" />
 	<global-property doc:name="Global Property" doc:id="d741b9b7-2e76-4ebf-95c4-9ce3dc93320c" name="api.env" value="${api.env}" />
 	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="false" doc:name="API Autodiscovery" doc:id="9b8e74bc-b21d-4e7a-af7f-1028bb7b3ea1" flowRef="poc-prototype-api-main" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a0d3b168-0670-47d0-8464-0423bc7686e1" file="properties/${api.env}.yaml" key="${encrypt.key}"/>
-	<tls:context name="TLS_Context" doc:name="TLS Context" doc:id="75b686d3-44fc-48a1-917c-2654eb983c7d" >
-		<tls:trust-store path="${tls.truststore.path}" password="${secure::tls.truststore.password}" type="jks" insecure="true"/>
-		<tls:key-store type="jks" path="${tls.keystore.path}" alias="${tls.keystore.alias}" keyPassword="${secure::tls.keystore.key.password}" password="${secure::tls.keystore.password}"/>
-	</tls:context>
+	<global-property doc:name="Global Property" doc:id="c33d12a4-055c-4463-9862-9ad0957d21eb" name="api.env" value="sit" />
+	<global-property doc:name="Global Property" doc:id="f1b647ef-4f35-42c3-baad-41368b0eeb29" name="encryption.key" value="mulepocprojs2026" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="fdbfedfa-184b-4817-96c0-f91d23774d38" file="properties/${api.env}.yaml" key="${encryption.key}"/>
 </mule>
